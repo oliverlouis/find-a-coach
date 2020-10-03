@@ -1,6 +1,8 @@
 <template>
   <div>
-    <section>FILTER</section>
+    <section>
+      <coach-filter @change-filter="setFilters"></coach-filter>
+    </section>
     <section>
       <base-card>
         <div class="controls">
@@ -26,18 +28,48 @@
 
 <script>
 import CoachItem from '../../components/coaches/CoachItem';
+import CoachFilter from '../../components/coaches/CoachFilter';
 export default {
+  data() {
+    return {
+      activeFilters: {
+        frontend: true,
+        backened: true,
+        career: true
+      }
+    };
+  },
+
   components: {
-    CoachItem
+    CoachItem,
+    CoachFilter
   },
 
   computed: {
     filteredCoaches() {
-      return this.$store.getters['coaches/coaches'];
+      const coaches = this.$store.getters['coaches/coaches'];
+      return coaches.filter(coach => {
+        if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
+          return true;
+        }
+        if (this.activeFilters.backend && coach.areas.includes('backend')) {
+          return true;
+        }
+        if (this.activeFilters.career && coach.areas.includes('career')) {
+          return true;
+        }
+        return false;
+      });
     },
 
     hasCoaches() {
       return this.$store.getters['coaches/hasCoaches'];
+    }
+  },
+
+  methods: {
+    setFilters(updatedFilters) {
+      this.activeFilters = updatedFilters;
     }
   }
 };
