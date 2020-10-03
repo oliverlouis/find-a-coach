@@ -22,11 +22,11 @@ export default {
     },
 
     coachContactLink() {
-      return `/coaches/${this.id}/contact`;
+      return `${this.$route.path}/${this.id}/contact`;
     },
 
     coachDetailsLink() {
-      return `/coaches/${this.id}`;
+      return `${this.$route.path}/${this.id}`;
     }
   }
 };
