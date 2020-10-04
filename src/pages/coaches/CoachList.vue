@@ -7,7 +7,9 @@
       <base-card>
         <div class="controls">
           <base-button mode="outline">Refresh</base-button>
-          <base-button link to="'/register">Register a Coach</base-button>
+          <base-button link to="'/register" v-if="!isCoach"
+            >Register a Coach</base-button
+          >
         </div>
         <ul v-if="hasCoaches">
           <coach-item
@@ -35,20 +37,20 @@ export default {
       activeFilters: {
         frontend: true,
         backened: true,
-        career: true
-      }
+        career: true,
+      },
     };
   },
 
   components: {
     CoachItem,
-    CoachFilter
+    CoachFilter,
   },
 
   computed: {
     filteredCoaches() {
       const coaches = this.$store.getters['coaches/coaches'];
-      return coaches.filter(coach => {
+      return coaches.filter((coach) => {
         if (this.activeFilters.frontend && coach.areas.includes('frontend')) {
           return true;
         }
@@ -64,14 +66,18 @@ export default {
 
     hasCoaches() {
       return this.$store.getters['coaches/hasCoaches'];
-    }
+    },
+
+    isCoach() {
+      return this.$store.getters['coaches/isCoach'];
+    },
   },
 
   methods: {
     setFilters(updatedFilters) {
       this.activeFilters = updatedFilters;
-    }
-  }
+    },
+  },
 };
 </script>
 

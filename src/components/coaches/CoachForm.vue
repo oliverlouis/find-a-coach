@@ -37,13 +37,15 @@
 
 <script>
 export default {
+  emits: ['save-data'],
+
   data() {
     return {
       firstName: '',
       lastName: '',
       description: '',
       rate: null,
-      areas: []
+      areas: [],
     };
   },
 
@@ -54,11 +56,11 @@ export default {
         last: this.lastName,
         desc: this.description,
         rate: this.rate,
-        areas: this.areas
+        areas: this.areas,
       };
-      console.log(formData);
-    }
-  }
+      this.$emit('save-data', formData);
+    },
+  },
 };
 </script>
 
@@ -107,7 +109,7 @@ textarea:focus {
 
 input[type='checkbox'] {
   display: inline;
-  width: auto;
+  /* width: auto; */
   border: none;
 }
 
