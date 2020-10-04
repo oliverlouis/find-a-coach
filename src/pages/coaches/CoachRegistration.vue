@@ -2,7 +2,7 @@
   <section>
     <base-card>
       <h2>Register as a coach</h2>
-      <coach-form @save-data="saveData"></coach-form>
+      <CoachForm @save-data="saveData" />
     </base-card>
   </section>
 </template>

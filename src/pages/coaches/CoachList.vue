@@ -1,7 +1,7 @@
 <template>
   <div>
     <section>
-      <coach-filter @change-filter="setFilters"></coach-filter>
+      <CoachFilter @change-filter="setFilters" />
     </section>
     <section>
       <base-card>
@@ -12,7 +12,7 @@
           >
         </div>
         <ul v-if="hasCoaches">
-          <coach-item
+          <CoachItem
             v-for="coach in filteredCoaches"
             :key="coach.id"
             :id="coach.id"
@@ -20,7 +20,7 @@
             :lastName="coach.lastName"
             :areas="coach.areas"
             :rate="coach.hourlyRate"
-          ></coach-item>
+          />
         </ul>
         <h3 v-else>No coaches found.</h3>
       </base-card>

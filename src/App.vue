@@ -1,6 +1,6 @@
 <template>
   <div>
-    <the-header></the-header>
+    <TheHeader />
     <router-view></router-view>
   </div>
 </template>
@@ -9,8 +9,8 @@
 import TheHeader from './components/layout/TheHeader';
 export default {
   components: {
-    TheHeader
-  }
+    TheHeader,
+  },
 };
 </script>
 
