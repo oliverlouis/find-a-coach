@@ -1,6 +1,14 @@
 <template>
   <div>
+    <!-- "!!" converts a truthy value into a real boolean -->
     <section>
+      <base-dialog
+        :show="!!error"
+        title="An Error Occured!"
+        @close="handleError"
+      >
+        <p>{{ error }}</p>
+      </base-dialog>
       <CoachFilter @change-filter="setFilters" />
     </section>
     <section>
@@ -38,6 +46,7 @@ export default {
   data() {
     return {
       isLoading: false,
+      error: null,
       activeFilters: {
         frontend: true,
         backened: true,
@@ -84,8 +93,17 @@ export default {
 
     async loadCoaches() {
       this.isLoading = true;
-      await this.$store.dispatch('coaches/LOAD_COACHES');
+      try {
+        await this.$store.dispatch('coaches/LOAD_COACHES');
+      } catch (error) {
+        this.error = error.message || 'Something went wrong';
+      }
+
       this.isLoading = false;
+    },
+
+    handleError() {
+      this.error = null;
     },
   },
 
