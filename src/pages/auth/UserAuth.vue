@@ -70,6 +70,8 @@ export default {
         } else {
           await this.$store.dispatch('SIGN_UP', actionPayload);
         }
+        const redirectUrl = '/' + (this.$route.query.redirect || 'coaches'); //would default to '/coaches' if there is no redirect parameter.
+        this.$router.replace(redirectUrl); // Redirects after successful log in. (redirect query found in CoachList)
       } catch (error) {
         this.error =
           error.message || 'Failed to authenticate. Try again later.';

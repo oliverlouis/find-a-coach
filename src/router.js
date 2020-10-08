@@ -7,6 +7,7 @@ import RequestReceived from './pages/requests/RequestReceived';
 import ContactCoach from './pages/requests/ContactCoach';
 import NotFound from './pages/NotFound';
 import UserAuth from './pages/auth/UserAuth';
+import store from './store/mainStore'; //Store imported in order to access isAuthenticated value
 
 const router = createRouter({
   history: createWebHistory(),
@@ -20,11 +21,31 @@ const router = createRouter({
       props: true,
       children: [{ path: 'contact', component: ContactCoach }]
     },
-    { path: '/register', component: CoachRegistration },
-    { path: '/requests', component: RequestReceived },
-    { path: '/auth', component: UserAuth },
+    {
+      path: '/register',
+      component: CoachRegistration,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/requests',
+      component: RequestReceived,
+      meta: { requiresAuth: true }
+    },
+    { path: '/auth', component: UserAuth, meta: { requiresUnAuth: true } },
     { path: '/:notFound(.*)', component: NotFound }
   ]
+});
+
+//Add navigation guards......first route meta data is applied to the guarded routes...See above ('meta')
+router.beforeEach((to, _, next) => {
+  if (to.meta.requiresAuth && !store.getters.isAuthenticated) {
+    next('/auth');
+    //'/auth' redirects navigation to auth  page prior to desired route if above parameters are true
+  } else if (to.meta.requiresUnAuth && store.getters.isAuthenticated) {
+    next('/coaches');
+  } else {
+    next(); // allow navigation to desired page
+  }
 });
 
 export default router;
