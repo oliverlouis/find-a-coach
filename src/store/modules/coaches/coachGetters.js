@@ -10,8 +10,8 @@ export default {
   isCoach(_, getters, _2, rootGetters) {
     //underscores negate non needed arguments
     const coaches = getters.coaches;
-    const userID = rootGetters.userID;
-    return coaches.some(coach => coach.id === userID); //returns true if some coach matches callback parameters
+    const userId = rootGetters.userId;
+    return coaches.some(coach => coach.id === userId); //returns true if some coach matches callback parameters
   },
 
   shouldUpdate(state) {
