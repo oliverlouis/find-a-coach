@@ -16,8 +16,22 @@ export default {
     TheHeader,
   },
 
+  computed: {
+    didAutoLogout() {
+      return this.$store.getters.didAutoLogout;
+    },
+  },
+
   created() {
     this.$store.dispatch('autoLogin');
+  },
+
+  watch: {
+    didAutoLogout(currentValue, oldValue) {
+      if (currentValue && currentValue !== oldValue) {
+        this.router.redirect('/coaches');
+      }
+    },
   },
 };
 </script>
